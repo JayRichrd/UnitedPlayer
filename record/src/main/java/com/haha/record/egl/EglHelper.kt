@@ -83,7 +83,7 @@ class EglHelper {
 
     }
 
-    public fun swapBuffers(): Boolean {
+    fun swapBuffers(): Boolean {
         mEgl?.let {
             return it.eglSwapBuffers(mEglDisplay, mEglSurface)
         }
@@ -91,11 +91,11 @@ class EglHelper {
         throw RuntimeException("egl is null")
     }
 
-    public fun getEglContext(): EGLContext? {
+    fun getEglContext(): EGLContext? {
         return mEglContext
     }
 
-    public fun destroyEgl() {
+    fun destroyEgl() {
         mEgl?.let {
             it.eglMakeCurrent(mEglDisplay, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT)
             it.eglDestroySurface(mEglDisplay, mEglSurface)

@@ -42,6 +42,16 @@ open class CustomGlSurfaceView : SurfaceView, SurfaceHolder.Callback {
         init()
     }
 
+    override fun surfaceCreated(holder: SurfaceHolder) {
+        Log.d("CustomGlSurfaceView", "surfaceCreated")
+        if (mSurface == null) {
+            mSurface = holder.surface
+        }
+        eglThread = EglThread(WeakReference(this))
+        eglThread!!.isCreate = true
+        eglThread!!.start()
+    }
+
     override fun surfaceChanged(holder: SurfaceHolder?, format: Int, width: Int, height: Int) {
         Log.d("CustomGlSurfaceView", "surfaceChanged")
         eglThread?.width = width
@@ -55,16 +65,6 @@ open class CustomGlSurfaceView : SurfaceView, SurfaceHolder.Callback {
         eglThread = null
         mSurface = null
         mEglContext = null
-    }
-
-    override fun surfaceCreated(holder: SurfaceHolder) {
-        Log.d("CustomGlSurfaceView", "surfaceCreated")
-        if (mSurface == null) {
-            mSurface = holder.surface
-        }
-        eglThread = EglThread(WeakReference(this))
-        eglThread!!.isCreate = true
-        eglThread!!.start()
     }
 
     fun setSurfaceAndEglContext(surface: Surface?, eglContext: EGLContext?) {
